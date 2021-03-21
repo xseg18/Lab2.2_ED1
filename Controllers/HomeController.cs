@@ -111,7 +111,6 @@ namespace Lab2_ED1.Controllers
         public IActionResult Privacy()
         {
             return View();
-        
         }
 
         public IActionResult Order()
