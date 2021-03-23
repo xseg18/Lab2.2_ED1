@@ -16,8 +16,8 @@ namespace E_Arboles
             public Y Data;
         }
         public Node Root;
-        string order;
-        public void Add(Node root, Y data, T key)
+        public string Order = "";
+        public void Add(Node root, T key, Y data)
         {
             Node Adding = new Node();
             Adding.Data = data;
@@ -37,7 +37,7 @@ namespace E_Arboles
                     }
                     else
                     {
-                        Add(root.Right, data, key);
+                        Add(root.Right, key, data);
 
                     }
                 }
@@ -50,7 +50,7 @@ namespace E_Arboles
                     }
                     else
                     {
-                        Add(root.Left, data, key);
+                        Add(root.Left, key, data);
                     }
                 }
             }
@@ -211,6 +211,39 @@ namespace E_Arboles
             root.Key = root.Left.Key;
             root.Right = RightNode;
             root.Left = root.Left.Left;
+        }
+        public string PreOrder(Node head)
+        {
+            if (head == null)
+            {
+                return "";
+            }
+            Order += head.Key.ToString() + " =>";
+            PreOrder(head.Left);
+            PreOrder(head.Right);
+            return Order;
+        }
+        public string InOrder(Node head)
+        {
+            if (head == null)
+            {
+                return "";
+            }
+            InOrder(head.Left);
+            Order += head.Key.ToString() + " =>";
+            InOrder(head.Right);
+            return Order;
+        }
+        public string PostOrder(Node head)
+        {
+            if (head == null)
+            {
+                return "";
+            }
+            PostOrder(head.Left);
+            PostOrder(head.Right);
+            Order += head.Key.ToString() + " =>";
+            return Order;
         }
     }
 }

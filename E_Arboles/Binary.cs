@@ -248,7 +248,6 @@ namespace E_Arboles
         }
         public string PreOrder(Node head)
         {
-            
             if(head == null)
             {
                 return "";

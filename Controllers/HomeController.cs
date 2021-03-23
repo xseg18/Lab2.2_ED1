@@ -82,7 +82,7 @@ namespace Lab2_ED1.Controllers
                                     Qty = Qty
                                 };
                                 Singleton.Instance2.Medicine.Add(newMedicine);
-                                Singleton.Instance.Index.Add(Name, PosList);
+                                Singleton.Instance.Index.Add(Singleton.Instance.Index.Root, Name, PosList);
                                 PosList++;
                             }
                         }
@@ -98,7 +98,7 @@ namespace Lab2_ED1.Controllers
                                 Qty = Qty
                             };
                             Singleton.Instance2.Medicine.Add(newMedicine);
-                            Singleton.Instance.Index.Add(Name, PosList);
+                            Singleton.Instance.Index.Add(Singleton.Instance.Index.Root, Name, PosList);
                             PosList++;
                         }
                     }
@@ -163,7 +163,7 @@ namespace Lab2_ED1.Controllers
             try
             {
                 medName = collection["Name"].ToString().ToUpper();
-                medPos = Singleton.Instance.Index.Find(medName);
+                //medPos = Singleton.Instance.Index.Find(medName);
                 if (medPos > -1)
                 {
                     medQty = Convert.ToInt32(collection["Qty"]);
@@ -216,8 +216,8 @@ namespace Lab2_ED1.Controllers
 
             if (Singleton.Instance2.Medicine[medPos].Qty == 0)
             {
-                Singleton.Instance1.ReStock.Add(Singleton.Instance.Index.Find(medName));
-                Singleton.Instance.Index.Delete(medName);
+                //Singleton.Instance1.ReStock.Add(Singleton.Instance.Index.Find(medName));
+                //Singleton.Instance.Index.Delete(medName);
             }
             return RedirectToAction(nameof(Order));
         }
@@ -236,7 +236,7 @@ namespace Lab2_ED1.Controllers
             foreach (var item in Singleton.Instance1.ReStock)
             {
                 Singleton.Instance2.Medicine[item].Qty = random.Next(1, 16);
-                Singleton.Instance.Index.Add(Singleton.Instance2.Medicine[item].Name, item);
+                //Singleton.Instance.Index.Add(Singleton.Instance2.Medicine[item].Name, item);
             }
             Singleton.Instance1.ReStock.Clear();
 

@@ -8,7 +8,7 @@ namespace Lab2_ED1.Models.Data
     public sealed class Singleton
     {
         private readonly static Singleton _instance = new Singleton();
-        public E_Arboles.Binary<string> Index;
+        public E_Arboles.AVL<string, int> Index;
         private readonly static Singleton _instance1 = new Singleton();
         public ELineales.Lista<int> ReStock;
         private readonly static Singleton _instance2 = new Singleton();
@@ -17,7 +17,7 @@ namespace Lab2_ED1.Models.Data
         public ELineales.Lista<Medicine> Order;
         private Singleton()
         {
-            Index = new E_Arboles.Binary<string>();
+            Index = new E_Arboles.AVL<string, int>();
             ReStock = new ELineales.Lista<int>();
             Medicine = new ELineales.Lista<Medicine>();
             Order = new ELineales.Lista<Medicine>();
