@@ -24,4 +24,8 @@
     <ProjectReference Include="E_Arboles\E_Arboles.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+
 </Project>
