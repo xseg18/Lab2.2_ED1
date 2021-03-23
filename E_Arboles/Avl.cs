@@ -67,7 +67,19 @@ namespace E_Arboles
                     {
                         if (temp.Right != null)
                         {
-                            LeftRotation(root);
+                            if (temp.Left == null)
+                            {
+                                LeftRotation(root);
+                            }
+                            else
+                            {
+                                Node safe = new Node();
+                                RightRotation(temp);
+                                temp.Right.Right.Right = safe;
+                                safe = temp.Right;
+                                LeftRotation(root);
+                                root.Left.Right = safe;
+                            }
                         }
                         else
                         {
@@ -87,7 +99,20 @@ namespace E_Arboles
                     {
                         if (temp.Left != null)
                         {
-                            RightRotation(root);
+                            if(temp.Right == null)
+                            {
+                                RightRotation(root);
+                            }
+                            else 
+                            {
+                                Node safe = new Node();
+                                safe = temp.Right;
+                                LeftRotation(temp);
+                                temp.Right.Left = safe;
+                                safe = temp.Right;
+                                RightRotation(root);
+                                root.Right.Left = safe;
+                            }
                         }
                         else
                         {
@@ -109,8 +134,6 @@ namespace E_Arboles
         {
             if (root != null)
             {
-
-
                 int disbalance = Height(root.Right) - Height(root.Left);
                 if (disbalance > 1)
                 {
@@ -119,7 +142,18 @@ namespace E_Arboles
                     {
                         if (temp.Right != null)
                         {
-                            LeftRotation(root);
+                            if (temp.Left == null)
+                            {
+                                LeftRotation(root);
+                            }
+                            else
+                            {
+                                Node safe = new Node();
+                                RightRotation(temp);
+                                safe = temp.Right;
+                                LeftRotation(root);
+                                root.Left.Right = safe;
+                            }
                         }
                         else
                         {
@@ -147,10 +181,23 @@ namespace E_Arboles
                     {
                         if (temp.Left != null)
                         {
-                            RightRotation(root);
+                            if (temp.Right == null)
+                            {
+                                RightRotation(root);
+                            }
+                            else
+                            {
+                                Node safe = new Node();
+                                safe = temp.Right;
+                                LeftRotation(temp);
+                                temp.Right.Left = safe;
+                                safe = temp.Right;
+                                RightRotation(root);
+                                root.Right.Left = safe;
+                            }
                         }
                         else
-                        {
+                        { 
                             LeftRotation(temp);
                             RightRotation(root);
                         }
@@ -197,6 +244,7 @@ namespace E_Arboles
             Node LeftNode = new Node();
             LeftNode.Data = root.Data;
             LeftNode.Key = root.Key;
+            LeftNode.Left = root.Left;
             root.Data = root.Right.Data;
             root.Key = root.Right.Key;
             root.Left = LeftNode;
@@ -207,6 +255,7 @@ namespace E_Arboles
             Node RightNode = new Node();
             RightNode.Data = root.Data;
             RightNode.Key = root.Key;
+            RightNode.Right = root.Right;
             root.Data = root.Left.Data;
             root.Key = root.Left.Key;
             root.Right = RightNode;
