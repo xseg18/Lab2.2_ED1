@@ -73,10 +73,10 @@ namespace E_Arboles
                             }
                             else
                             {
-                                Node safe = new Node();
+                                Node safe = temp.Right.Left;
                                 RightRotation(temp);
-                                temp.Right.Right.Right = safe;
-                                safe = temp.Right;
+                                temp.Right.Left = safe;
+                                safe = temp.Left;
                                 LeftRotation(root);
                                 root.Left.Right = safe;
                             }
@@ -105,10 +105,9 @@ namespace E_Arboles
                             }
                             else 
                             {
-                                Node safe = new Node();
-                                safe = temp.Right;
+                                Node safe = temp.Left.Right;
                                 LeftRotation(temp);
-                                temp.Right.Left = safe;
+                                temp.Left.Right = safe;
                                 safe = temp.Right;
                                 RightRotation(root);
                                 root.Right.Left = safe;
@@ -148,9 +147,10 @@ namespace E_Arboles
                             }
                             else
                             {
-                                Node safe = new Node();
+                                Node safe = temp.Right.Left;
                                 RightRotation(temp);
-                                safe = temp.Right;
+                                temp.Right.Left = safe;
+                                safe = temp.Left;
                                 LeftRotation(root);
                                 root.Left.Right = safe;
                             }
@@ -187,10 +187,9 @@ namespace E_Arboles
                             }
                             else
                             {
-                                Node safe = new Node();
-                                safe = temp.Right;
+                                Node safe = temp.Left.Right;
                                 LeftRotation(temp);
-                                temp.Right.Left = safe;
+                                temp.Left.Right = safe;
                                 safe = temp.Right;
                                 RightRotation(root);
                                 root.Right.Left = safe;
