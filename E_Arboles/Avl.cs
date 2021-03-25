@@ -10,256 +10,130 @@ namespace E_Arboles
     {
         public class Node
         {
-            public Node Right;
             public Node Left;
+            public Node Right;
             public T Key;
             public Y Data;
+            public Node(T Key, Y Data)
+            {
+                this.Key = Key;
+                this.Data = Data;
+            }
         }
         public Node Root;
         public string Order = "";
-        public void Add(Node root, T key, Y data)
+
+        public void Add(T key, Y data)
         {
-            Node Adding = new Node();
-            Adding.Data = data;
-            Adding.Key = key;
+            Node item = new Node(key, data);
             if (Root == null)
             {
-                Root = Adding;
+                Root = item;
             }
             else
             {
-                if (Adding.Key.CompareTo(root.Key) > 0)
-                {
-                    if (root.Right == null)
-                    {
-                        root.Right = Adding;
-                        Balance(Root);
-                    }
-                    else
-                    {
-                        Add(root.Right, key, data);
+                Root = Add(Root, item);
+            }
+        }
 
-                    }
-                }
-                else if (Adding.Key.CompareTo(root.Key) < 0)
-                {
-                    if (root.Left == null)
-                    {
-                        root.Left = Adding;
-                        Balance(Root);
-                    }
-                    else
-                    {
-                        Add(root.Left, key, data);
-                    }
-                }
-            }
-        }
-        void Balance(Node root)
+        private Node Add(Node actual, Node item)
         {
-            if (root != null)
+            if (actual == null)
             {
-                int disbalance = Height(root.Right) - Height(root.Left);
-                if (disbalance > 1)
-                {
-                    Node temp = root.Right;
-                    if (Height(temp.Right) - Height(temp.Left) >= -1 && Height(temp.Right) - Height(temp.Left) <= 1)
-                    {
-                        if (temp.Right != null)
-                        {
-                            if (temp.Left == null)
-                            {
-                                LeftRotation(root);
-                            }
-                            else
-                            {
-                                Node safe = temp.Right.Left;
-                                RightRotation(temp);
-                                temp.Right.Left = safe;
-                                safe = temp.Left;
-                                LeftRotation(root);
-                                root.Left.Right = safe;
-                            }
-                        }
-                        else
-                        {
-                            RightRotation(temp);
-                            LeftRotation(root);
-                        }
-                    }
-                    else
-                    {
-                        Balance(temp, root, "");
-                    }
-                }
-                else if (disbalance < -1)
-                {
-                    Node temp = root.Left;
-                    if (Height(temp.Right) - Height(temp.Left) >= -1 && Height(temp.Right) - Height(temp.Left) <= 1)
-                    {
-                        if (temp.Left != null)
-                        {
-                            if(temp.Right == null)
-                            {
-                                RightRotation(root);
-                            }
-                            else 
-                            {
-                                Node safe = temp.Left.Right;
-                                LeftRotation(temp);
-                                temp.Left.Right = safe;
-                                safe = temp.Right;
-                                RightRotation(root);
-                                root.Right.Left = safe;
-                            }
-                        }
-                        else
-                        {
-                            LeftRotation(temp);
-                            RightRotation(root);
-                        }
-                    }
-                    else
-                    {
-                        Balance(temp, root, "L");
-                    }
+                actual = item;
+                return actual;
+            }
+            else if (item.Key.CompareTo(actual.Key) > 0)
+            {
+                actual.Right = Add(actual.Right, item);
+                actual = Balance(actual);
+            }
+            else if (item.Key.CompareTo(actual.Key) < 0)
+            {
+                actual.Left = Add(actual.Left, item);
+                actual = Balance(actual);
+            }
+            return actual;
+        }
 
-                }
-                Balance(root.Left);
-                Balance(root.Right);
-            }
-        }
-        void Balance(Node root, Node prev, string direc)
+        private Node Balance(Node actual)
         {
-            if (root != null)
+            if (dBalance(actual) > 1)
             {
-                int disbalance = Height(root.Right) - Height(root.Left);
-                if (disbalance > 1)
+                if (dBalance(actual.Right) > 0)
                 {
-                    Node temp = root.Right;
-                    if (Height(temp.Right) - Height(temp.Left) >= -1 && Height(temp.Right) - Height(temp.Left) <= 1)
-                    {
-                        if (temp.Right != null)
-                        {
-                            if (temp.Left == null)
-                            {
-                                LeftRotation(root);
-                            }
-                            else
-                            {
-                                Node safe = temp.Right.Left;
-                                RightRotation(temp);
-                                temp.Right.Left = safe;
-                                safe = temp.Left;
-                                LeftRotation(root);
-                                root.Left.Right = safe;
-                            }
-                        }
-                        else
-                        {
-                            RightRotation(temp);
-                            LeftRotation(root);
-                        }
-                        if (direc == "L")
-                        {
-                            prev.Left = root;
-                        }
-                        else
-                        {
-                            prev.Right = root;
-                        }
-                    }
-                    else
-                    {
-                        Balance(temp, root, "");
-                    }
+                    actual = RotRR(actual);
                 }
-                else if (disbalance < -1)
+                else
                 {
-                    Node temp = root.Left;
-                    if (Height(temp.Right) - Height(temp.Left) >= -1 && Height(temp.Right) - Height(temp.Left) <= 1)
-                    {
-                        if (temp.Left != null)
-                        {
-                            if (temp.Right == null)
-                            {
-                                RightRotation(root);
-                            }
-                            else
-                            {
-                                Node safe = temp.Left.Right;
-                                LeftRotation(temp);
-                                temp.Left.Right = safe;
-                                safe = temp.Right;
-                                RightRotation(root);
-                                root.Right.Left = safe;
-                            }
-                        }
-                        else
-                        { 
-                            LeftRotation(temp);
-                            RightRotation(root);
-                        }
-                        if (direc == "L")
-                        {
-                            prev.Left = root;
-                        }
-                        else
-                        {
-                            prev.Right = root;
-                        }
-                    }
-                    else
-                    {
-                        Balance(temp, root, "L");
-                    }
+                    actual = RotRL(actual);
                 }
-                Balance(root.Left);
-                Balance(root.Right);
             }
+            else if (dBalance(actual) < -1)
+            {
+                if (dBalance(actual.Left) > 0)
+                {
+                    actual = RotLR(actual);
+                }
+                else
+                {
+                    actual = RotLL(actual);
+                }
+            }
+            return actual;
         }
-        int Height(Node root)
+
+        private int dBalance(Node actual)
         {
-            if (root == null)
+            int Lbalance = Height(actual.Left);
+            int Rbalance = Height(actual.Right);
+            return Rbalance - Lbalance;
+        }
+
+        private int Height(Node actual)
+        {
+            if (actual == null)
             {
                 return 0;
             }
             else
             {
-                int Lheight = Height(root.Left);
-                int Rheight = Height(root.Right);
-                if(Lheight > Rheight)
-                {
-                    return (Lheight + 1);
-                }
-                else
-                {
-                    return (Rheight + 1);
-                }
+                int Lheight = Height(actual.Left);
+                int Rheight = Height(actual.Right);
+                return Lheight > Rheight ? Lheight + 1 : Rheight + 1;
             }
         }
-        void LeftRotation(Node root)
+
+        private Node RotRR(Node root)
         {
-            Node LeftNode = new Node();
-            LeftNode.Data = root.Data;
-            LeftNode.Key = root.Key;
-            LeftNode.Left = root.Left;
-            root.Data = root.Right.Data;
-            root.Key = root.Right.Key;
-            root.Left = LeftNode;
-            root.Right = root.Right.Right;
+            Node temp = root.Right;
+            root.Right = temp.Left;
+            temp.Left = root;
+            return temp;
         }
-        void RightRotation(Node root)
+
+        private Node RotLL(Node root)
         {
-            Node RightNode = new Node();
-            RightNode.Data = root.Data;
-            RightNode.Key = root.Key;
-            RightNode.Right = root.Right;
-            root.Data = root.Left.Data;
-            root.Key = root.Left.Key;
-            root.Right = RightNode;
-            root.Left = root.Left.Left;
+            Node temp = root.Left;
+            root.Left = temp.Right;
+            temp.Right = root;
+            return temp;
         }
+
+        private Node RotLR(Node root)
+        {
+            Node temp = root.Left;
+            root.Left = RotRR(temp);
+            return RotLL(root);
+        }
+
+        private Node RotRL(Node root)
+        {
+            Node temp = root.Right;
+            root.Right = RotLL(temp);
+            return RotRR(root);
+        }
+
         public string PreOrder(Node head)
         {
             if (head == null)

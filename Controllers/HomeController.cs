@@ -53,10 +53,7 @@ namespace Lab2_ED1.Controllers
                 {
                     postedFile.CopyTo(stream);
                 }
-                using (FileStream stream = new FileStream(filePath, FileMode.Create))
-                {
-                    postedFile.CopyTo(stream);
-                }
+
                 using (TextFieldParser csvParser = new TextFieldParser(filePath))
                 {
                     csvParser.CommentTokens = new string[] { "#" };
@@ -90,7 +87,7 @@ namespace Lab2_ED1.Controllers
                                     Qty = Qty
                                 };
                                 Singleton.Instance2.Medicine.Add(newMedicine);
-                                Singleton.Instance.Index.Add(Singleton.Instance.Index.Root, Name, PosList);
+                                Singleton.Instance.Index.Add(Name, PosList);
                                 PosList++;
                             }
                         }
@@ -106,7 +103,7 @@ namespace Lab2_ED1.Controllers
                                 Qty = Qty
                             };
                             Singleton.Instance2.Medicine.Add(newMedicine);
-                            Singleton.Instance.Index.Add(Singleton.Instance.Index.Root, Name, PosList);
+                            Singleton.Instance.Index.Add(Name, PosList);
                             PosList++;
                         }
                     }
@@ -294,7 +291,7 @@ namespace Lab2_ED1.Controllers
             }
             else if (recorrido == "In")
             {
-                 Recorrido = Singleton.Instance.Index.InOrder(Singleton.Instance.Index.Root);
+                Recorrido = Singleton.Instance.Index.InOrder(Singleton.Instance.Index.Root);
             }
             Singleton.Instance.Index.Order = "";
             ViewData["Recorrido"] = Recorrido;
