@@ -20,7 +20,7 @@ namespace E_Arboles
                 this.Data = Data;
             }
         }
-        public Node Root;
+        Node Root;
         public string Order = "";
 
         public void Add(T key, Y data)
@@ -134,7 +134,34 @@ namespace E_Arboles
             return RotRR(root);
         }
 
-        public string PreOrder(Node head)
+        public Y Find(T key)
+        {
+            return Find(Root, key);
+        }
+
+        private Y Find(Node head, T key)
+        {
+            if (head == null)
+            {
+                return default(Y);
+            }
+            else if (key.CompareTo(head.Key) < 0)
+            {
+                return Find(head.Left, key);
+            }
+            else if (key.CompareTo(head.Key) > 0)
+            {
+                return Find(head.Right, key);
+            }
+            return head.Data;
+        }
+
+        public string PreOrder()
+        {
+            return PreOrder(Root);
+        }
+
+        private string PreOrder(Node head)
         {
             if (head == null)
             {
@@ -145,7 +172,13 @@ namespace E_Arboles
             PreOrder(head.Right);
             return Order;
         }
-        public string InOrder(Node head)
+
+        public string InOrder()
+        {
+            return InOrder(Root);
+        }
+
+        private string InOrder(Node head)
         {
             if (head == null)
             {
@@ -156,7 +189,13 @@ namespace E_Arboles
             InOrder(head.Right);
             return Order;
         }
-        public string PostOrder(Node head)
+
+        public string PostOrder()
+        {
+            return PostOrder(Root);
+        }
+
+        private string PostOrder(Node head)
         {
             if (head == null)
             {

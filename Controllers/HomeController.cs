@@ -19,7 +19,7 @@ namespace Lab2_ED1.Controllers
     {
         public static bool hayCliente = false;
         public static string medName, clientName, clientAdress, clientNIT, Recorrido;
-        public static int PosList = 0, medPos, medQty;
+        public static int PosList = 1, medPos, medQty;
 
         private IHostingEnvironment Environment;
         public HomeController(IHostingEnvironment _environment)
@@ -168,8 +168,8 @@ namespace Lab2_ED1.Controllers
             try
             {
                 medName = collection["Name"].ToString().ToUpper();
-                //medPos = Singleton.Instance.Index.Find(medName);
-                if (medPos > -1)
+                medPos = Singleton.Instance.Index.Find(medName) - 1;
+                if (medPos > 0)
                 {
                     medQty = Convert.ToInt32(collection["Qty"]);
                     if (Singleton.Instance2.Medicine[medPos].Qty >= medQty)
@@ -221,7 +221,7 @@ namespace Lab2_ED1.Controllers
 
             if (Singleton.Instance2.Medicine[medPos].Qty == 0)
             {
-                //Singleton.Instance1.ReStock.Add(Singleton.Instance.Index.Find(medName));
+                Singleton.Instance1.ReStock.Add(Singleton.Instance.Index.Find(medName) - 1);
                 //Singleton.Instance.Index.Delete(medName);
             }
             return RedirectToAction(nameof(Order));
@@ -283,15 +283,15 @@ namespace Lab2_ED1.Controllers
         {
             if (recorrido == "Pre")
             {
-                Recorrido = Singleton.Instance.Index.PreOrder(Singleton.Instance.Index.Root);
+                Recorrido = Singleton.Instance.Index.PreOrder();
             }
             else if (recorrido == "Post")
             {
-                Recorrido = Singleton.Instance.Index.PostOrder(Singleton.Instance.Index.Root);
+                Recorrido = Singleton.Instance.Index.PostOrder();
             }
             else if (recorrido == "In")
             {
-                Recorrido = Singleton.Instance.Index.InOrder(Singleton.Instance.Index.Root);
+                Recorrido = Singleton.Instance.Index.InOrder();
             }
             Singleton.Instance.Index.Order = "";
             ViewData["Recorrido"] = Recorrido;
