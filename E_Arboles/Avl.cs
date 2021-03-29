@@ -268,6 +268,15 @@ namespace E_Arboles
             Order += head.Key.ToString() + " =>";
             return Order;
         }
+
+        public void Delete(T delete)
+        {
+            Delete(Root, delete);
+        }
+        private Node Delete(Node root, T delete)
+        {
+            return 
+        }
     }
 }
 

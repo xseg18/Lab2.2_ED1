@@ -168,8 +168,8 @@ namespace Lab2_ED1.Controllers
             try
             {
                 medName = collection["Name"].ToString().ToUpper();
-                medPos = Singleton.Instance.Index.Find(medName) - 1;
-                if (medPos > 0)
+                medPos = Singleton.Instance.Index.Find(medName);
+                if (medPos > -1)
                 {
                     medQty = Convert.ToInt32(collection["Qty"]);
                     if (Singleton.Instance2.Medicine[medPos].Qty >= medQty)
