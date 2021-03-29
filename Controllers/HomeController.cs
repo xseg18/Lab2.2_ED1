@@ -222,7 +222,7 @@ namespace Lab2_ED1.Controllers
             if (Singleton.Instance2.Medicine[medPos].Qty == 0)
             {
                 Singleton.Instance1.ReStock.Add(Singleton.Instance.Index.Find(medName) - 1);
-                //Singleton.Instance.Index.Delete(medName);
+                Singleton.Instance.Index.Delete(medName);
             }
             return RedirectToAction(nameof(Order));
         }
@@ -241,7 +241,7 @@ namespace Lab2_ED1.Controllers
             foreach (var item in Singleton.Instance1.ReStock)
             {
                 Singleton.Instance2.Medicine[item].Qty = random.Next(1, 16);
-                //Singleton.Instance.Index.Add(Singleton.Instance2.Medicine[item].Name, item);
+                Singleton.Instance.Index.Add(Singleton.Instance2.Medicine[item].Name, item);
             }
             Singleton.Instance1.ReStock.Clear();
 

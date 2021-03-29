@@ -43,33 +43,84 @@ namespace E_Arboles
                 actual = item;
                 return actual;
             }
-            else if (item.Key.CompareTo(actual.Key) > 0)
-            {
-                actual.Right = Add(actual.Right, item);
-                actual = Balance(actual);
-            }
             else if (item.Key.CompareTo(actual.Key) < 0)
             {
                 actual.Left = Add(actual.Left, item);
                 actual = Balance(actual);
             }
+            else if (item.Key.CompareTo(actual.Key) > 0)
+            {
+                actual.Right = Add(actual.Right, item);
+                actual = Balance(actual);
+            }
+            return actual;
+        }
+
+        public void Delete(T key)
+        {
+            Root = Delete(Root, key);
+        }
+
+        public Node Delete(Node actual, T key)
+        {
+            if (actual == null)
+            {
+                return actual;
+            }
+            else if (key.CompareTo(actual.Key) < 0)
+            {
+                actual.Left = Delete(actual.Left, key);
+            }
+            else if (key.CompareTo(actual.Key) > 0)
+            {
+                actual.Right = Delete(actual.Right, key);
+            }
+            else
+            {
+                if (actual.Left == null || actual.Right == null)
+                {
+                    Node temp = null;
+                    if (temp == actual.Left)
+                    {
+                        temp = actual.Right;
+                    }
+                    else
+                    {
+                        temp = actual.Left;
+                    }
+
+                    if (temp == null)
+                    {
+                        actual = null;
+                    }
+                    else
+                    {
+                        actual = temp;
+                    }
+                }
+                else
+                {
+                    Node temp = actual.Left;
+                    while (temp.Right != null)
+                    {
+                        temp = temp.Right;
+                    }
+                    actual.Key = temp.Key;
+                    actual.Data = temp.Data;
+                    actual.Left = Delete(actual.Left, temp.Key);
+                }
+            }
+            if (actual == null)
+            {
+                return actual;
+            }
+            actual = Balance(actual);
             return actual;
         }
 
         private Node Balance(Node actual)
         {
-            if (dBalance(actual) > 1)
-            {
-                if (dBalance(actual.Right) > 0)
-                {
-                    actual = RotRR(actual);
-                }
-                else
-                {
-                    actual = RotRL(actual);
-                }
-            }
-            else if (dBalance(actual) < -1)
+            if (dBalance(actual) < -1)
             {
                 if (dBalance(actual.Left) > 0)
                 {
@@ -78,6 +129,17 @@ namespace E_Arboles
                 else
                 {
                     actual = RotLL(actual);
+                }
+            }
+            else if (dBalance(actual) > 1)
+            {
+                if (dBalance(actual.Right) > 0)
+                {
+                    actual = RotRR(actual);
+                }
+                else
+                {
+                    actual = RotRL(actual);
                 }
             }
             return actual;
